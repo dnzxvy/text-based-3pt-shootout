@@ -56,7 +56,7 @@ class thrPtContestant:
             self.shoot_racks()
             other_contestant.shoot_racks()
 
-    def prnt_contestant_details(self):
+    def print_contestant_details(self):
         print(f"{self.name},")
         print(f"AGE: {self.age}")
         print(f"TEAM: {self.team}")
