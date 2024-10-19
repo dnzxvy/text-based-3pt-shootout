@@ -22,7 +22,7 @@ df_filtered_players = league_stats[league_stats['FG3M'] > 50].copy()  # Make a c
 df_filtered_players.loc[:, '3PT_RATING'] = (df_filtered_players['FG3M'] + df_filtered_players['FG3A'] + df_filtered_players['FG3_PCT']) / 3
 
 # Sort the players by three-point makes and get the top 5
-the_best_shooters = df_filtered_players.sort_values(by='FG3M', ascending=False).head(6)
+the_best_shooters = df_filtered_players.sort_values(by='FG3M', ascending=False).head(200)
 
 # Display the results
 print("\nPlayers with more than 50 3-POINTERS:")
@@ -38,7 +38,7 @@ def delay_print(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
-        time.sleep(0.05)
+        time.sleep(0.20)
 
 
 def simulate_contest(player_name, fg3_rating, num_shots=5):
@@ -51,7 +51,7 @@ def simulate_contest(player_name, fg3_rating, num_shots=5):
         print(f"\n{player_name} is shooting on rack {rack + 1} now")
 
 
-        made_this_rack = sum(1 for _ in range(5) if random.randint(290, 415) < fg3_rating)
+        made_this_rack = sum(1 for _ in range(5) if random.randint(75, 450) < fg3_rating)
         score += made_this_rack
         totalshots = num_shots * 5
         delay_print(f"Made {made_this_rack} shots this rack \n")
@@ -59,9 +59,30 @@ def simulate_contest(player_name, fg3_rating, num_shots=5):
     return score
 
 scores ={}
-for _, player in the_best_shooters.iterrows():
+entered_players = []
+
+for i in range(5):
+    while True:
+        player_name_input = input(f"Enter a player name for player {i+1}: ").strip().lower()
+
+        matched_player = None
+        for _, player in the_best_shooters.iterrows():
+            if player['PLAYER_NAME'].strip().lower() == player_name_input:
+                matched_player = player
+                break
+
+        if matched_player is not None:
+            print(f"{matched_player['PLAYER_NAME']} is entered into the 3 Point Shootout")
+            entered_players.append(matched_player) #adds the player
+            break
+        else:
+            print("player not found. please enter a valid player name.")
+
+
+for player in entered_players:
     player_name = player['PLAYER_NAME']
     fg3_rating = player['3PT_RATING']
+
     scores[player_name] = simulate_contest(player_name, fg3_rating)
 
 
