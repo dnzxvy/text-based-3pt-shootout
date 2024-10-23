@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA 3-Point Shootout Results</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>3-Point Shootout Results</h2>
+
+        
+        {% for player, racks in results.items() %}
+            <h3>{{ player }}</h3>
+            <ul>
+                {% for rack in racks %}
+                    <li>{{ rack }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+
+        
+        <h2>The winner is {{ winner }} with a score of {{ winner_score }} points!</h2>
+
+        
+        <a href="/" class="btn btn-primary">Back to Shootout Form</a>
+    </div>
+</body>
+</html>
