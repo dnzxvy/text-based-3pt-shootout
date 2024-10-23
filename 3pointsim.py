@@ -1,5 +1,5 @@
 from nba_api.stats.endpoints import LeagueDashPlayerStats
-import pandas as pd
+
 import time
 import random
 import sys
