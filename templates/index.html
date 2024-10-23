@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA 3-Point Shootout Simulation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Enter 6 Players to begin the shootout</h2>
+
+        <!-- Display flash messages -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-danger">
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form action="/simulate" method="post">
+            <label for="player1">Player 1:</label>
+            <input type="text" id="player1" name="player1" required><br>
+            
+            <label for="player2">Player 2:</label>
+            <input type="text" id="player2" name="player2" required><br>
+            
+            <label for="player3">Player 3:</label>
+            <input type="text" id="player3" name="player3" required><br>
+            
+            <label for="player4">Player 4:</label>
+            <input type="text" id="player4" name="player4" required><br>
+            
+            <label for="player5">Player 5:</label>
+            <input type="text" id="player5" name="player5" required><br>
+            
+            <label for="player6">Player 6:</label>
+            <input type="text" id="player6" name="player6" required><br>
+
+            <input type="submit" value="Start Shootout">
+        </form>
+    </div>
+</body>
+</html>
