@@ -3,12 +3,12 @@ import pandas as pd
 import random
 
 app = Flask(__name__)
-app.secret_key = 'lifecrazy'  # Required for flash messages
+app.secret_key = '#lifecrazy'  # Required for flash messages
 
 # Load player data from CSV
 player_data = pd.read_csv('best3ptplayers.csv')  # Adjust the path to your CSV file
 player_names = player_data['PLAYER_NAME'].str.strip().str.lower().tolist()  # Normalize player names
-
+fg3_rating = player_data['3PT_RATING']
 
 # Home route to render the form page
 @app.route('/')
@@ -16,7 +16,7 @@ def index():
     return render_template('index.html')
 
 
-# Simulation route to handle form submission and redirect to results page
+#
 @app.route('/simulate', methods=['POST'])
 def simulate():
 
@@ -47,8 +47,13 @@ def simulate():
     for player_name in normalized_inputs:
         racks = []
         total_score = 0
+        player_row = player_data[player_data['PLAYER_NAME'].str.strip().str.lower() == player_name]
+
+        # Make sure we get a scalar value for the 3PT_RATING
+        fg3_rating = player_row['3PT_RATING'].item()
         for rack in range(5):  # Assume 5 racks of shots
-            made_this_rack = random.randint(1, 5)  # Random number of shots made per rack
+            print(f"\n{player_name} is shooting on rack {rack + 1} now")
+            made_this_rack = sum(1 for _ in range(5) if random.randint(75, 450) < fg3_rating)
             total_score += made_this_rack  # Add the rack score to total
             racks.append(f"{player_name} made {made_this_rack} shots in rack {rack + 1}")
         results[player_name] = racks

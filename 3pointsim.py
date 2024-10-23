@@ -1,5 +1,5 @@
 from nba_api.stats.endpoints import LeagueDashPlayerStats
-
+import pandas as pd
 import time
 import random
 import sys
@@ -18,7 +18,7 @@ print(league_stats.head())
 # Filter players who have made more than 50 three-pointers
 df_filtered_players = league_stats[league_stats['FG3M'] > 50].copy()  # Make a copy to avoid SettingWithCopyWarning
 
-
+#make the 3pt rating stat and add it as a column on the csv file
 df_filtered_players.loc[:, '3PT_RATING'] = (df_filtered_players['FG3M'] + df_filtered_players['FG3A'] + df_filtered_players['FG3_PCT']) / 3
 
 
